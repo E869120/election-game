@@ -8,7 +8,7 @@
 <br />
 
 ## ゲームの遊び方
-* GitHub から **App/ELECTION-GAME.App** をダウンロードしてください。
+* GitHub から **App/ELECTION-GAME.exe** をダウンロードしてください。
 * これを開くと、ゲームで遊ぶことができます。
 
 <br />
