@@ -1,6 +1,5 @@
 ﻿#include <Siv3D.hpp>
 #include <ctime>
-using namespace std;
 
 struct Player {
 	int Speech;    // 演説力
@@ -135,7 +134,7 @@ void Vote_Kakutei() {
 			double Ken_Gosa = 1.5 * Norm();
 			double VoteRate = 0.01 * (VoteRate1 + Vote_Gosa);
 			if (Wakamono[i][j] == false) VoteRate = 0.01 * (VoteRate2 + Vote_Gosa);
-			VoteRate += 0.05 * Norm(); VoteRate = min(0.9999, max(0.0001, VoteRate));
+			VoteRate += 0.05 * Norm(); VoteRate = Min(0.9999, Max(0.0001, VoteRate));
 			P1[i][j] = 10000.0 * VoteRate * (1.0 / (1.0 + exp(-(Keisei[i][j] + OverAll_Gosa + Ken_Gosa) / 10.0)));
 			P2[i][j] = 10000.0 * VoteRate * (1.0 / (1.0 + exp(+(Keisei[i][j] + OverAll_Gosa + Ken_Gosa) / 10.0)));
 		}
@@ -223,10 +222,10 @@ void Refresh() {
 				if (rx < 0 || ry < 0 || rx >= 5 || ry >= 9) continue;
 				score -= 0.05 * Keisei[i][j];
 				score += 0.10 * Keisei[rx][ry];
-				mins = min(mins, 1.0 * Keisei[rx][ry]);
-				maxs = max(maxs, 1.0 * Keisei[rx][ry]);
+				mins = Min(mins, 1.0 * Keisei[rx][ry]);
+				maxs = Max(maxs, 1.0 * Keisei[rx][ry]);
 			}
-			double newscore = min(maxs, max(mins, score));
+			double newscore = Min(maxs, Max(mins, score));
 			if (newscore >= 0) NewKeisei[i][j] = (int)(0.5 + newscore);
 			else NewKeisei[i][j] = -(int)(0.5 - newscore);
 		}
@@ -289,8 +288,8 @@ void Main() {
 			if (MouseX >= 415.0 && MouseX <= 555.0 && MouseY >= 300.0 && MouseY <= 440.0) MouseState = 2;
 			if (MouseX >= 585.0 && MouseX <= 725.0 && MouseY >= 300.0 && MouseY <= 440.0) MouseState = 3;
 			for (int i = 10; i < 14; i++) {
-				if (i != MouseState + 10) ButtonA[i] = max(0.0, ButtonA[i] - 5.0 * Scene::DeltaTime());
-				if (i == MouseState + 10) ButtonA[i] = min(1.0, ButtonA[i] + 5.0 * Scene::DeltaTime());
+				if (i != MouseState + 10) ButtonA[i] = Max(0.0, ButtonA[i] - 5.0 * Scene::DeltaTime());
+				if (i == MouseState + 10) ButtonA[i] = Min(1.0, ButtonA[i] + 5.0 * Scene::DeltaTime());
 			}
 
 			// キーが押された場合
@@ -343,26 +342,26 @@ void Main() {
 
 			// 形勢評価（2列目）
 			font15(U"あなた").draw(647, 386, ColorF(1.00, 1.00, 1.00));
-			font15(U"Lv.").draw(697 - 9 * (3 + to_string(Z1.Speech).size()), 414, ColorF(0.60, 0.10, 0.30)); font15(Z1.Speech).draw(693 - 9 * to_string(Z1.Speech).size(), 414, ColorF(0.60, 0.10, 0.30));
-			font15(U"Lv.").draw(697 - 9 * (3 + to_string(Z1.Kanban).size()), 442, ColorF(0.60, 0.10, 0.30)); font15(Z1.Kanban).draw(693 - 9 * to_string(Z1.Kanban).size(), 442, ColorF(0.60, 0.10, 0.30));
-			font15(Z1.Jiban).draw(680 - 9 * to_string(Z1.Jiban).size(), 470, ColorF(0.60, 0.10, 0.30)); font15(U"人").draw(680, 470, ColorF(0.60, 0.10, 0.30));
-			font15(Z1.Kaban).draw(680 - 9 * to_string(Z1.Kaban).size(), 498, ColorF(0.60, 0.10, 0.30)); font15(U"万").draw(680, 498, ColorF(0.60, 0.10, 0.30));
-			font15(Z1.NumSpc).draw(680 - 9 * to_string(Z1.NumSpc).size(), 526, ColorF(0.60, 0.10, 0.30)); font15(U"回").draw(680, 526, ColorF(0.60, 0.10, 0.30));
-			font15(Exp1).draw(681 - 9 * to_string(Exp1).size(), 554, ColorF(0.60, 0.10, 0.30)); font15(U"%").draw(681, 554, ColorF(0.60, 0.10, 0.30));
+			font15(U"Lv.").draw(697 - 9 * (3 + ToString(Z1.Speech).size()), 414, ColorF(0.60, 0.10, 0.30)); font15(Z1.Speech).draw(693 - 9 * ToString(Z1.Speech).size(), 414, ColorF(0.60, 0.10, 0.30));
+			font15(U"Lv.").draw(697 - 9 * (3 + ToString(Z1.Kanban).size()), 442, ColorF(0.60, 0.10, 0.30)); font15(Z1.Kanban).draw(693 - 9 * ToString(Z1.Kanban).size(), 442, ColorF(0.60, 0.10, 0.30));
+			font15(Z1.Jiban).draw(680 - 9 * ToString(Z1.Jiban).size(), 470, ColorF(0.60, 0.10, 0.30)); font15(U"人").draw(680, 470, ColorF(0.60, 0.10, 0.30));
+			font15(Z1.Kaban).draw(680 - 9 * ToString(Z1.Kaban).size(), 498, ColorF(0.60, 0.10, 0.30)); font15(U"万").draw(680, 498, ColorF(0.60, 0.10, 0.30));
+			font15(Z1.NumSpc).draw(680 - 9 * ToString(Z1.NumSpc).size(), 526, ColorF(0.60, 0.10, 0.30)); font15(U"回").draw(680, 526, ColorF(0.60, 0.10, 0.30));
+			font15(Exp1).draw(681 - 9 * ToString(Exp1).size(), 554, ColorF(0.60, 0.10, 0.30)); font15(U"%").draw(681, 554, ColorF(0.60, 0.10, 0.30));
 
 			// 形勢評価（3列目）
 			font15(U"AI").draw(721, 386, ColorF(1.00, 1.00, 1.00));
-			font15(U"Lv.").draw(757 - 9 * (3 + to_string(Z2.Speech).size()), 414, ColorF(0.25, 0.25, 0.55)); font15(Z2.Speech).draw(753 - 9 * to_string(Z2.Speech).size(), 414, ColorF(0.25, 0.25, 0.55));
-			font15(U"Lv.").draw(757 - 9 * (3 + to_string(Z2.Kanban).size()), 442, ColorF(0.25, 0.25, 0.55)); font15(Z2.Kanban).draw(753 - 9 * to_string(Z2.Kanban).size(), 442, ColorF(0.25, 0.25, 0.55));
-			font15(Z2.Jiban).draw(740 - 9 * to_string(Z2.Jiban).size(), 470, ColorF(0.25, 0.25, 0.55)); font15(U"人").draw(740, 470, ColorF(0.25, 0.25, 0.55));
-			font15(Z2.Kaban).draw(740 - 9 * to_string(Z2.Kaban).size(), 498, ColorF(0.25, 0.25, 0.55)); font15(U"万").draw(740, 498, ColorF(0.25, 0.25, 0.55));
-			font15(Z2.NumSpc).draw(740 - 9 * to_string(Z2.NumSpc).size(), 526, ColorF(0.25, 0.25, 0.55)); font15(U"回").draw(740, 526, ColorF(0.25, 0.25, 0.55));
-			font15(Exp2).draw(741 - 9 * to_string(Exp2).size(), 554, ColorF(0.25, 0.25, 0.55)); font15(U"%").draw(741, 554, ColorF(0.25, 0.25, 0.55));
+			font15(U"Lv.").draw(757 - 9 * (3 + ToString(Z2.Speech).size()), 414, ColorF(0.25, 0.25, 0.55)); font15(Z2.Speech).draw(753 - 9 * ToString(Z2.Speech).size(), 414, ColorF(0.25, 0.25, 0.55));
+			font15(U"Lv.").draw(757 - 9 * (3 + ToString(Z2.Kanban).size()), 442, ColorF(0.25, 0.25, 0.55)); font15(Z2.Kanban).draw(753 - 9 * ToString(Z2.Kanban).size(), 442, ColorF(0.25, 0.25, 0.55));
+			font15(Z2.Jiban).draw(740 - 9 * ToString(Z2.Jiban).size(), 470, ColorF(0.25, 0.25, 0.55)); font15(U"人").draw(740, 470, ColorF(0.25, 0.25, 0.55));
+			font15(Z2.Kaban).draw(740 - 9 * ToString(Z2.Kaban).size(), 498, ColorF(0.25, 0.25, 0.55)); font15(U"万").draw(740, 498, ColorF(0.25, 0.25, 0.55));
+			font15(Z2.NumSpc).draw(740 - 9 * ToString(Z2.NumSpc).size(), 526, ColorF(0.25, 0.25, 0.55)); font15(U"回").draw(740, 526, ColorF(0.25, 0.25, 0.55));
+			font15(Exp2).draw(741 - 9 * ToString(Exp2).size(), 554, ColorF(0.25, 0.25, 0.55)); font15(U"%").draw(741, 554, ColorF(0.25, 0.25, 0.55));
 
 			// 盤面の表示
 			if (Situation == 3) {
 				double wait_keisuu = 1.0;
-				if (WaitTime <= 0.2) wait_keisuu = min(1.00, -1.25 * WaitTime);
+				if (WaitTime <= 0.2) wait_keisuu = Min(1.00, -1.25 * WaitTime);
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 9; j++) {
 						if (Choice[i][j] == true) Rect(45 + j * 50, 40 + i * 50, 50, 50).draw(ColorF(1.0, 0.6, 0.2, (0.4 + 0.6 * ButtonB[i][j]) * wait_keisuu));
@@ -405,8 +404,8 @@ void Main() {
 			}
 
 			// 予想投票率
-			VoteRate1 = min(99, VoteRate1);
-			VoteRate2 = min(99, VoteRate2);
+			VoteRate1 = Min(99, VoteRate1);
+			VoteRate2 = Min(99, VoteRate2);
 			Rect(550, 165, 200, 120).drawFrame(1, 1, ColorF(0.20, 0.20, 0.20));
 			Line(550, 73, 670, 73).draw(2, ColorF(0.00, 0.00, 0.00));
 			font20(U"予想投票率").draw(550, 45, ColorF(0.20, 0.20, 0.20));
@@ -442,25 +441,25 @@ void Main() {
 
 			// 左側の表示
 			font20(U"選挙戦").draw(15, 340, ColorF(0.20, 0.20, 0.20));
-			font20((Turn + 2) / 3).draw(100 - 12 * to_string((Turn + 2) / 3).size(), 340, ColorF(0.20, 0.20, 0.20));
+			font20((Turn + 2) / 3).draw(100 - 12 * ToString((Turn + 2) / 3).size(), 340, ColorF(0.20, 0.20, 0.20));
 			font20(U"日目 [全14日]").draw(100, 340, ColorF(0.20, 0.20, 0.20));
 			if (Turn % 3 == 1) font20(U"朝").draw(250, 340, ColorF(0.20, 0.20, 0.20));
 			if (Turn % 3 == 2) font20(U"昼").draw(250, 340, ColorF(0.20, 0.20, 0.20));
 			if (Turn % 3 == 0) font20(U"夜").draw(250, 340, ColorF(0.20, 0.20, 0.20));
 			if (Situation == 2) {
-				Rect(352, 338, 160, 30).draw(ColorF(0.25, 0.25, 0.55, min(1.00, 2.0 * abs(WaitTime))));
-				font20(U"AIのターン").draw(380, 338, ColorF(1.00, 1.00, 1.00, min(1.00, 2.0 * abs(WaitTime))));
+				Rect(352, 338, 160, 30).draw(ColorF(0.25, 0.25, 0.55, Min(1.00, 2.0 * abs(WaitTime))));
+				font20(U"AIのターン").draw(380, 338, ColorF(1.00, 1.00, 1.00, Min(1.00, 2.0 * abs(WaitTime))));
 			}
 			else {
-				Rect(352, 338, 160, 30).draw(ColorF(0.60, 0.10, 0.30, min(1.00, 2.0 * abs(WaitTime))));
-				font20(U"あなたのターン").draw(362, 338, ColorF(1.00, 1.00, 1.00, min(1.00, 2.0 * abs(WaitTime))));
+				Rect(352, 338, 160, 30).draw(ColorF(0.60, 0.10, 0.30, Min(1.00, 2.0 * abs(WaitTime))));
+				font20(U"あなたのターン").draw(362, 338, ColorF(1.00, 1.00, 1.00, Min(1.00, 2.0 * abs(WaitTime))));
 			}
 
 			// 下半分の描画
 			if (Situation == 1 || Situation == 2) {
 				int offset[6] = { 0, 0, 0, 0, 0, 0 };
 				if (WaitTime >= -0.05 && WaitTime <= 1.2) {
-					for (int i = 0; i < 6; i++) offset[i] = max(0, (int)(400 * (i + 2) - 2400.0 * WaitTime));
+					for (int i = 0; i < 6; i++) offset[i] = Max(0, (int)(400 * (i + 2) - 2400.0 * WaitTime));
 				}
 
 				if (Situation == 1) {
@@ -502,7 +501,7 @@ void Main() {
 					for (int i = 0; i < 14; i++) ButtonA[i] = 0;
 					IsWaiting = 0; Situation = 2; NextAI = AI_Choice();
 				}
-				if (WaitTime >= 0.00 && IsWaiting == 2) { Situation = 3; IsWaiting = 0; Life = min(Z1.NumSpc, Z1.Kaban / 20); ResetChoice(); }
+				if (WaitTime >= 0.00 && IsWaiting == 2) { Situation = 3; IsWaiting = 0; Life = Min(Z1.NumSpc, Z1.Kaban / 20); ResetChoice(); }
 
 				// 初めての場合
 				if (Hajimete == true) {
@@ -567,7 +566,7 @@ void Main() {
 				font10(U"※演説した場所の形勢が [演説力レベル] だけ上がります。").draw(245, 575, ColorF(0.2, 0.2, 0.2));
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.2) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, min(1.00, 1.0 + 2.0 * WaitTime)));
+				if (WaitTime <= 0.2) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, Min(1.00, 1.0 + 2.0 * WaitTime)));
 				if (WaitTime >= 0.0 && IsWaiting == 1) {
 					for (int i = 0; i < 14; i++) ButtonA[i] = 0;
 					IsWaiting = 0; Situation = 2; NextAI = AI_Choice();
@@ -577,8 +576,8 @@ void Main() {
 			if (Situation == 8) {
 				font20(U"一日の終わりには").draw(45, 405, ColorF(0.2, 0.2, 0.2));
 				font20(U"形勢が隣に拡散します").draw(45, 435, ColorF(0.2, 0.2, 0.2));
-				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], min(1.00, abs(WaitTime) * 2.0)));
-				font30(U"確認する").draw(200, 505, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
+				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0)));
+				font30(U"確認する").draw(200, 505, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
 				font10(U"※ 3 日目以降も、一日の終わりには同様のことが起こります。").draw(220, 575, ColorF(0.2, 0.2, 0.2));
 
 				// 左側の正方形
@@ -611,10 +610,10 @@ void Main() {
 			}
 
 			if (Situation == 4) {
-				font20(U"深夜に、ＳＮＳを通じた選挙活動が").draw(100, 420, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
-				font20(U"若者に対して行われました").draw(140, 450, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
-				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], min(1.00, abs(WaitTime) * 2.0)));
-				font30(U"確認する").draw(200, 505, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
+				font20(U"深夜に、ＳＮＳを通じた選挙活動が").draw(100, 420, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
+				font20(U"若者に対して行われました").draw(140, 450, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
+				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0)));
+				font30(U"確認する").draw(200, 505, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
 				font10(U"※若者の多い地区 1 箇所の形勢が [影響力レベル] だけ上がります。").draw(200, 575, ColorF(0.2, 0.2, 0.2));
 
 				// 遷移状態の場合
@@ -625,12 +624,12 @@ void Main() {
 			}
 
 			if (Situation == 5) {
-				font20(U"選挙戦").draw(110, 420, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
-				font20((Turn + 2) / 3).draw(193 - 6 * to_string((Turn + 2) / 3).size(), 420, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
-				font20(U"日目が始まりました！").draw(210, 420, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
-				font20(U"「チャンスカード」を引いてください").draw(90, 450, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
-				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], min(1.00, abs(WaitTime) * 2.0)));
-				font30(U"カードを引く").draw(170, 505, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
+				font20(U"選挙戦").draw(110, 420, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
+				font20((Turn + 2) / 3).draw(193 - 6 * ToString((Turn + 2) / 3).size(), 420, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
+				font20(U"日目が始まりました！").draw(210, 420, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
+				font20(U"「チャンスカード」を引いてください").draw(90, 450, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
+				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0)));
+				font30(U"カードを引く").draw(170, 505, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
 
 				// カードがある場合
 				if (Card == 1 && WaitTime >= 0.05) {
@@ -682,16 +681,16 @@ void Main() {
 						font15(U"選挙カーが事故に遭う。").draw(250, 240, ColorF(0.2, 0.2, 0.2));
 						font15(U"70 万円支払う。").draw(250, 270, ColorF(0.2, 0.2, 0.2));
 					}
-					Rect(290, 330, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[8], 1.00 - 0.40 * ButtonA[8], min(1.00, abs(WaitTime) * 2.0)));
-					font30(U"確認する").draw(340, 335, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
+					Rect(290, 330, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[8], 1.00 - 0.40 * ButtonA[8], Min(1.00, abs(WaitTime) * 2.0)));
+					font30(U"確認する").draw(340, 335, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
 				}
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.2) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, min(1.00, 1.0 + 2.0 * WaitTime)));
+				if (WaitTime <= 0.2) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, Min(1.00, 1.0 + 2.0 * WaitTime)));
 				if (WaitTime >= 0.0 && IsWaiting == 1) {
 					IsWaiting = 0; Situation = 1; Card = 0;
 					if (CardID == 0) { VoteRate1 += 10; }
-					if (CardID == 1) { Z1.Kaban = max(0, Z1.Kaban - 40); Z2.Kaban = max(0, Z2.Kaban - 40); }
+					if (CardID == 1) { Z1.Kaban = Max(0, Z1.Kaban - 40); Z2.Kaban = Max(0, Z2.Kaban - 40); }
 					if (CardID == 2) { Z1.Kanban += 2; VoteRate1 += 4; VoteRate2 += 4; }
 					if (CardID == 3) { Z2.Kanban += 2; VoteRate1 += 3; VoteRate2 += 3; }
 					if (CardID == 4) { for (int i = 0; i < 45; i++) Keisei[i / 9][i % 9] += 1; }
@@ -699,17 +698,17 @@ void Main() {
 					if (CardID == 6) { Z1.Jiban += 25; }
 					if (CardID == 7) { Z2.Jiban += 25; }
 					if (CardID == 8) { Z1.Kaban += 70; }
-					if (CardID == 9) { Z1.Kaban = max(0, Z1.Kaban - 70); }
+					if (CardID == 9) { Z1.Kaban = Max(0, Z1.Kaban - 70); }
 				}
 			}
 
 			if (Situation == 6) {
-				font20(U"いよいよ投票日です！").draw(160, 420, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
-				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], min(1.00, abs(WaitTime) * 2.0)));
-				font30(U"開票に進む").draw(185, 505, ColorF(0.2, 0.2, 0.2, min(1.00, abs(WaitTime) * 2.0)));
+				font20(U"いよいよ投票日です！").draw(160, 420, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
+				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0)));
+				font30(U"開票に進む").draw(185, 505, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.2 && IsWaiting == 1) Rect(0, 0, 800, 600).draw(ColorF(1.00, 1.00, 1.00, min(1.00, 1.0 + 1.25 * WaitTime)));
+				if (WaitTime <= 0.2 && IsWaiting == 1) Rect(0, 0, 800, 600).draw(ColorF(1.00, 1.00, 1.00, Min(1.00, 1.0 + 1.25 * WaitTime)));
 				if (WaitTime >= 0.0 && IsWaiting == 1) {
 					IsWaiting = 0; Situation = 7; WaitTime = 0; Vote_Kakutei();
 				}
@@ -725,8 +724,8 @@ void Main() {
 				// マウスの状態
 				int MouseState = -1;
 				if (MouseX >= 250.0 && MouseX <= 550.0 && MouseY >= 390.0 && MouseY <= 460.0) MouseState = 0;
-				if (MouseState == 0) ButtonA[14] = min(1.0, ButtonA[14] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 0) ButtonA[14] = max(0.0, ButtonA[14] - 5.0 * Scene::DeltaTime());
+				if (MouseState == 0) ButtonA[14] = Min(1.0, ButtonA[14] + 5.0 * Scene::DeltaTime());
+				if (MouseState != 0) ButtonA[14] = Max(0.0, ButtonA[14] - 5.0 * Scene::DeltaTime());
 
 				// クリックの状態
 				if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down()) {
@@ -746,10 +745,10 @@ void Main() {
 
 				// ボタン・時間の更新
 				for (int i = 0; i < 6; i++) {
-					if (i != MouseState) ButtonA[i] = max(0.0, ButtonA[i] - 5.0 * Scene::DeltaTime());
-					if (i == MouseState) ButtonA[i] = min(1.0, ButtonA[i] + 5.0 * Scene::DeltaTime());
+					if (i != MouseState) ButtonA[i] = Max(0.0, ButtonA[i] - 5.0 * Scene::DeltaTime());
+					if (i == MouseState) ButtonA[i] = Min(1.0, ButtonA[i] + 5.0 * Scene::DeltaTime());
 				}
-				ButtonA[6] = max(0.0, ButtonA[6] - 1.0 * Scene::DeltaTime());
+				ButtonA[6] = Max(0.0, ButtonA[6] - 1.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -779,13 +778,13 @@ void Main() {
 			if (Situation == 3) {
 				int StateX = -1, StateY = -1;
 				if (MouseX >= 45.0 && MouseX <= 495.0 && MouseY >= 40.0 && MouseY <= 490.0) {
-					StateY = max(0, min(8, (int)((MouseX - 45.0) / 50.0)));
-					StateX = max(0, min(4, (int)((MouseY - 40.0) / 50.0)));
+					StateY = Max(0, Min(8, (int)((MouseX - 45.0) / 50.0)));
+					StateX = Max(0, Min(4, (int)((MouseY - 40.0) / 50.0)));
 				}
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 9; j++) {
-						if (i == StateX && j == StateY) ButtonB[i][j] = min(1.0, ButtonB[i][j] + 5.0 * Scene::DeltaTime());
-						else ButtonB[i][j] = max(0.0, ButtonB[i][j] - 5.0 * Scene::DeltaTime());
+						if (i == StateX && j == StateY) ButtonB[i][j] = Min(1.0, ButtonB[i][j] + 5.0 * Scene::DeltaTime());
+						else ButtonB[i][j] = Max(0.0, ButtonB[i][j] - 5.0 * Scene::DeltaTime());
 					}
 				}
 				WaitTime += Scene::DeltaTime();
@@ -805,8 +804,8 @@ void Main() {
 			if (Situation == 8) {
 				int MouseState = -1;
 				if (MouseX >= 150.0 && MouseX <= 370.0 && MouseY >= 500.0 && MouseY <= 555.0) MouseState = 0;
-				if (MouseState == 0) ButtonA[7] = min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 0) ButtonA[7] = max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
+				if (MouseState == 0) ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
+				if (MouseState != 0) ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -819,8 +818,8 @@ void Main() {
 			if (Situation == 4) {
 				int MouseState = -1;
 				if (MouseX >= 150.0 && MouseX <= 370.0 && MouseY >= 500.0 && MouseY <= 555.0) MouseState = 0;
-				if (MouseState == 0) ButtonA[7] = min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 0) ButtonA[7] = max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
+				if (MouseState == 0) ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
+				if (MouseState != 0) ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -834,10 +833,10 @@ void Main() {
 				int MouseState = -1;
 				if (MouseX >= 150.0 && MouseX <= 370.0 && MouseY >= 500.0 && MouseY <= 555.0) MouseState = 0;
 				if (MouseX >= 290.0 && MouseX <= 510.0 && MouseY >= 330.0 && MouseY <= 385.0) MouseState = 1;
-				if (MouseState == 0 && Card == 0) ButtonA[7] = min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 0 || Card != 0) ButtonA[7] = max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
-				if (MouseState == 1 && Card == 1) ButtonA[8] = min(1.0, ButtonA[8] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 1 || Card != 1) ButtonA[8] = max(0.0, ButtonA[8] - 5.0 * Scene::DeltaTime());
+				if (MouseState == 0 && Card == 0) ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
+				if (MouseState != 0 || Card != 0) ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
+				if (MouseState == 1 && Card == 1) ButtonA[8] = Min(1.0, ButtonA[8] + 5.0 * Scene::DeltaTime());
+				if (MouseState != 1 || Card != 1) ButtonA[8] = Max(0.0, ButtonA[8] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -857,8 +856,8 @@ void Main() {
 			if (Situation == 6) {
 				int MouseState = -1;
 				if (Rect{ 150, 500, 220, 55 }.mouseOver()) MouseState = 0;
-				if (MouseState == 0) ButtonA[7] = min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 0) ButtonA[7] = max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
+				if (MouseState == 0) ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
+				if (MouseState != 0) ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -938,7 +937,7 @@ void Main() {
 					else { ra = 0.25; rb = 0.25; rc = 0.55; }
 					Rect(460 + j * 32, 120 + i * 32, 24, 24).draw(ColorF(ra, rb, rc));
 					if (i * 9 + j < Kakutei) {
-						int wari = (int)(100.0 * P1[i][j] / (P1[i][j] + P2[i][j]) + 0.5); wari = min(99, wari);
+						int wari = (int)(100.0 * P1[i][j] / (P1[i][j] + P2[i][j]) + 0.5); wari = Min(99, wari);
 						if (wari < 10) font15(wari).draw(472 + j * 32, 120 + i * 32, ColorF(1.0, 1.0, 1.0));
 						else font15(wari).draw(463 + j * 32, 120 + i * 32, ColorF(1.0, 1.0, 1.0));
 					}
@@ -970,10 +969,10 @@ void Main() {
 
 			// 赤の票数
 			font50(DisVote1).draw(40, 440, ColorF(0.60, 0.10, 0.30));
-			font30(U"票").draw(40 + 32 * to_string(DisVote1).size(), 460, ColorF(0.60, 0.10, 0.30));
+			font30(U"票").draw(40 + 32 * ToString(DisVote1).size(), 460, ColorF(0.60, 0.10, 0.30));
 
 			// 青の票数
-			font50(DisVote2).draw(730 - 32 * to_string(DisVote2).size(), 440, ColorF(0.25, 0.25, 0.55));
+			font50(DisVote2).draw(730 - 32 * ToString(DisVote2).size(), 440, ColorF(0.25, 0.25, 0.55));
 			font30(U"票").draw(730, 460, ColorF(0.25, 0.25, 0.55));
 
 			// 勝敗確定
@@ -997,16 +996,16 @@ void Main() {
 				font30(U"AI").draw(160, 240, ColorF(1.0, 1.0, 1.0));
 				font30(U"：").draw(240, 200, ColorF(1.0, 1.0, 1.0));
 				font30(U"：").draw(240, 240, ColorF(1.0, 1.0, 1.0));
-				font30(CurrentVote1, U"票（", wari1, U"%）").draw(480 - 19 * to_string(CurrentVote1).size(), 200);
-				font30(CurrentVote2, U"票（", wari2, U"%）").draw(480 - 19 * to_string(CurrentVote1).size(), 240);
+				font30(CurrentVote1, U"票（", wari1, U"%）").draw(480 - 19 * ToString(CurrentVote1).size(), 200);
+				font30(CurrentVote2, U"票（", wari2, U"%）").draw(480 - 19 * ToString(CurrentVote1).size(), 240);
 				History[14] = wari1;
 			}
 
 			// マウス判定
 			int MouseState = -1;
 			if (MouseX >= 200.0 && MouseX <= 600.0 && MouseY >= 400.0 && MouseY <= 500.0) MouseState = 0;
-			if (MouseState == 0) ButtonA[9] = min(1.0, ButtonA[9] + 5.0 * Scene::DeltaTime());
-			if (MouseState != 0) ButtonA[9] = max(0.0, ButtonA[9] - 5.0 * Scene::DeltaTime());
+			if (MouseState == 0) ButtonA[9] = Min(1.0, ButtonA[9] + 5.0 * Scene::DeltaTime());
+			if (MouseState != 0) ButtonA[9] = Max(0.0, ButtonA[9] - 5.0 * Scene::DeltaTime());
 
 			// クリックの状態
 			if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down() && WaitTime >= 0.0) {
@@ -1028,15 +1027,15 @@ void Main() {
 			Rect(40, 510, 720, 60).drawFrame(3, ColorF(0.2, 0.2, 0.2));
 			Line(400, 510, 400, 570).draw(LineStyle::SquareDot, 2, Color(20, 20, 20)); font20(U"▼").draw(390, 485, ColorF(0.2, 0.2, 0.2));
 			font50(DisVote1).draw(40, 440, ColorF(0.60, 0.10, 0.30));
-			font30(U"票").draw(40 + 32 * to_string(DisVote1).size(), 460, ColorF(0.60, 0.10, 0.30));
-			font50(DisVote2).draw(730 - 32 * to_string(DisVote2).size(), 440, ColorF(0.25, 0.25, 0.55));
+			font30(U"票").draw(40 + 32 * ToString(DisVote1).size(), 460, ColorF(0.60, 0.10, 0.30));
+			font50(DisVote2).draw(730 - 32 * ToString(DisVote2).size(), 440, ColorF(0.25, 0.25, 0.55));
 			font30(U"票").draw(730, 460, ColorF(0.25, 0.25, 0.55));
 
 			// 形勢の変動
 			for (int i = 0; i < 14; i++) {
 				if (WaitTime < 0.1 * i) continue;
-				double ax = 80.0 + 300.0 * (i + 0) / 14, ay = 360.0 - 220.0 * History[i + 0] / 100; ax = min(ax, 80.0 + 3000.0 * WaitTime / 14.0);
-				double bx = 80.0 + 300.0 * (i + 1) / 14, by = 360.0 - 220.0 * History[i + 1] / 100; bx = min(bx, 80.0 + 3000.0 * WaitTime / 14.0);
+				double ax = 80.0 + 300.0 * (i + 0) / 14, ay = 360.0 - 220.0 * History[i + 0] / 100; ax = Min(ax, 80.0 + 3000.0 * WaitTime / 14.0);
+				double bx = 80.0 + 300.0 * (i + 1) / 14, by = 360.0 - 220.0 * History[i + 1] / 100; bx = Min(bx, 80.0 + 3000.0 * WaitTime / 14.0);
 				Quad(Vec2(ax, ay), Vec2(bx, by), Vec2(bx, 360.0), Vec2(ax, 360.0)).draw(ColorF(0.60, 0.10, 0.30, 0.70));
 				Quad(Vec2(ax, ay), Vec2(bx, by), Vec2(bx, 140.0), Vec2(ax, 140.0)).draw(ColorF(0.25, 0.25, 0.55, 0.70));
 			}
@@ -1049,7 +1048,7 @@ void Main() {
 			font15(U"14日目").draw(335, 365, ColorF(0.20, 0.20, 0.20));
 
 			// 勝率の変動
-			int Amari = min(14, (int)(3.0 * WaitTime) % 20);
+			int Amari = Min(14, (int)(3.0 * WaitTime) % 20);
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 9; j++) {
 					double ra = 0, rb = 0, rc = 0;
@@ -1084,7 +1083,7 @@ void Main() {
 				}
 			}
 			font30(Amari).draw(440, 160, ColorF(0.2, 0.2, 0.2));
-			font20(U"日目時点での形勢").draw(440 + 20 * to_string(Amari).size(), 170, ColorF(0.2, 0.2, 0.2));
+			font20(U"日目時点での形勢").draw(440 + 20 * ToString(Amari).size(), 170, ColorF(0.2, 0.2, 0.2));
 
 			// 終了ボタン
 			Rect(650, 20, 130, 60).draw(ColorF(1.0, 0.5, 0.5, 0.5 + 0.5 * ButtonA[15]));
@@ -1093,8 +1092,8 @@ void Main() {
 			// マウス判定
 			int MouseState = -1;
 			if (MouseX >= 650.0 && MouseX <= 780.0 && MouseY >= 20.0 && MouseY <= 80.0) MouseState = 0;
-			if (MouseState == 0) ButtonA[15] = min(1.0, ButtonA[15] + 5.0 * Scene::DeltaTime());
-			if (MouseState != 0) ButtonA[15] = max(0.0, ButtonA[15] - 5.0 * Scene::DeltaTime());
+			if (MouseState == 0) ButtonA[15] = Min(1.0, ButtonA[15] + 5.0 * Scene::DeltaTime());
+			if (MouseState != 0) ButtonA[15] = Max(0.0, ButtonA[15] - 5.0 * Scene::DeltaTime());
 
 			// クリックの状態
 			if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down() && WaitTime >= 0.0) {
