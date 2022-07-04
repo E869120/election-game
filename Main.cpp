@@ -462,28 +462,23 @@ void Main() {
 				if (WaitTime >= -0.05 && WaitTime <= 1.2) {
 					for (int i = 0; i < 6; i++) offset[i] = max(0, (int)(400 * (i + 2) - 2400.0 * WaitTime));
 				}
+
 				if (Situation == 1) {
-					Rect(20 - offset[0], 385, 24, 24).draw(ColorF(1.00 - 0.40 * ButtonA[0], 1.00 - 0.90 * ButtonA[0], 1.00 - 0.70 * ButtonA[0]));
-					Rect(20 - offset[1], 419, 24, 24).draw(ColorF(1.00 - 0.40 * ButtonA[1], 1.00 - 0.90 * ButtonA[1], 1.00 - 0.70 * ButtonA[1]));
-					Rect(20 - offset[2], 453, 24, 24).draw(ColorF(1.00 - 0.40 * ButtonA[2], 1.00 - 0.90 * ButtonA[2], 1.00 - 0.70 * ButtonA[2]));
-					Rect(20 - offset[3], 487, 24, 24).draw(ColorF(1.00 - 0.40 * ButtonA[3], 1.00 - 0.90 * ButtonA[3], 1.00 - 0.70 * ButtonA[3]));
-					Rect(20 - offset[4], 521, 24, 24).draw(ColorF(1.00 - 0.40 * ButtonA[4], 1.00 - 0.90 * ButtonA[4], 1.00 - 0.70 * ButtonA[4]));
-					Rect(20 - offset[5], 555, 24, 24).draw(ColorF(1.00 - 0.40 * ButtonA[5], 1.00 - 0.90 * ButtonA[5], 1.00 - 0.70 * ButtonA[5]));
+					for (int i = 0; i < 6; ++i) {
+						double button = ButtonA[i];
+						Rect(20 - offset[i], 385 + 34 * i, 24).draw(ColorF{ 1.00 - 0.40 * button, 1.00 - 0.90 * button, 1.00 - 0.70 * button });
+					}
 				}
 				else {
-					Rect(20 - offset[0], 385, 24, 24).draw(ColorF(1.00 - 0.75 * ButtonA[0], 1.00 - 0.75 * ButtonA[0], 1.00 - 0.45 * ButtonA[0]));
-					Rect(20 - offset[1], 419, 24, 24).draw(ColorF(1.00 - 0.75 * ButtonA[1], 1.00 - 0.75 * ButtonA[1], 1.00 - 0.45 * ButtonA[1]));
-					Rect(20 - offset[2], 453, 24, 24).draw(ColorF(1.00 - 0.75 * ButtonA[2], 1.00 - 0.75 * ButtonA[2], 1.00 - 0.45 * ButtonA[2]));
-					Rect(20 - offset[3], 487, 24, 24).draw(ColorF(1.00 - 0.75 * ButtonA[3], 1.00 - 0.75 * ButtonA[3], 1.00 - 0.45 * ButtonA[3]));
-					Rect(20 - offset[4], 521, 24, 24).draw(ColorF(1.00 - 0.75 * ButtonA[4], 1.00 - 0.75 * ButtonA[4], 1.00 - 0.45 * ButtonA[4]));
-					Rect(20 - offset[5], 555, 24, 24).draw(ColorF(1.00 - 0.75 * ButtonA[5], 1.00 - 0.75 * ButtonA[5], 1.00 - 0.45 * ButtonA[5]));
+					for (int i = 0; i < 6; ++i) {
+						double button = ButtonA[i];
+						Rect(20 - offset[i], 385 + 34 * i, 24).draw(ColorF{ 1.00 - 0.75 * button, 1.00 - 0.75 * button, 1.00 - 0.45 * button });
+					}
 				}
-				Rect(20 - offset[0], 385, 24, 24).drawFrame(2, ColorF(0.20, 0.20, 0.20));
-				Rect(20 - offset[1], 419, 24, 24).drawFrame(2, ColorF(0.20, 0.20, 0.20));
-				Rect(20 - offset[2], 453, 24, 24).drawFrame(2, ColorF(0.20, 0.20, 0.20));
-				Rect(20 - offset[3], 487, 24, 24).drawFrame(2, ColorF(0.20, 0.20, 0.20));
-				Rect(20 - offset[4], 521, 24, 24).drawFrame(2, ColorF(0.20, 0.20, 0.20));
-				Rect(20 - offset[5], 555, 24, 24).drawFrame(2, ColorF(0.20, 0.20, 0.20));
+				auto color_frame = ColorF(0.20, 0.20, 0.20);
+				for (int i = 0; i < 6; ++i) {
+					Rect(20 - offset[i], 385 + 34 * i, 24).drawFrame(2, color_frame);
+				}
 
 				// 文字の表示
 				font15(U"演説をする（資金 -20万、形勢向上）").draw(55 - offset[0], 385, ColorF(0.20, 0.20, 0.20));
