@@ -52,15 +52,6 @@ double probAI[6][14] = {
 	{ 0.40, 0.80, 0.50, 0.15, 0.15, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01 }   // ＳＮＳ投稿
 };
 
-double Randouble() {
-	double s = 0, t = 1;
-	for (int i = 0; i < 3; i++) {
-		t /= 1024.0;
-		s += 1.0 * (rand() % 1024) * t;
-	}
-	return s;
-}
-
 bool AllZero() {
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 9; j++) {
@@ -85,7 +76,7 @@ int AI_Choice() {
 	}
 	else {
 		while (true) {
-			double ret = Randouble();
+			double ret = Random();
 			for (int i = 0; i < 6; i++) {
 				if (ret < probAI[i][Days]) { NextChoice = i; break; }
 				ret -= probAI[i][Days];
@@ -161,8 +152,8 @@ void Initialize() {
 	}
 	for (int t = 0; t < 15; t++) {
 		while (true) {
-			int sx = rand() % 5;
-			int sy = rand() % 9;
+			int sx = Random(4);
+			int sy = Random(8);
 			if (Wakamono[sx][sy] == false) { Wakamono[sx][sy] = true; break; }
 		}
 	}
@@ -183,8 +174,8 @@ void ResetChoice() {
 	}
 	for (int t = 0; t < 7; t++) {
 		while (true) {
-			int sx = rand() % 5;
-			int sy = rand() % 9;
+			int sx = Random(4);
+			int sy = Random(8);
 			if (Choice[sx][sy] == false) { Choice[sx][sy] = true; break; }
 		}
 	}
@@ -195,15 +186,15 @@ void Apply_SNS() {
 
 	// 自分の影響力
 	while (true) {
-		int sx = rand() % 5;
-		int sy = rand() % 9;
+		int sx = Random(4);
+		int sy = Random(8);
 		if (Wakamono[sx][sy] == true) { Keisei[sx][sy] += Z1.Kanban; qx = sx; qy = sy; break; }
 	}
 
 	// 相手の影響力
 	while (true) {
-		int sx = rand() % 5;
-		int sy = rand() % 9;
+		int sx = Random(4);
+		int sy = Random(8);
 		if (Wakamono[sx][sy] == true && (sx != qx || sy != qy)) { Keisei[sx][sy] -= Z2.Kanban; break; }
 	}
 
