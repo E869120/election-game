@@ -737,12 +737,12 @@ void Main() {
 			if (Situation == 1 && Hajimete == false) {
 				// マウスの状態
 				int MouseState = -1;
-				if (MouseX >= 20.0 && MouseX <= 44.0 && MouseY >= 385.0 && MouseY <= 409.0) MouseState = 0;
-				if (MouseX >= 20.0 && MouseX <= 44.0 && MouseY >= 419.0 && MouseY <= 443.0) MouseState = 1;
-				if (MouseX >= 20.0 && MouseX <= 44.0 && MouseY >= 453.0 && MouseY <= 477.0) MouseState = 2;
-				if (MouseX >= 20.0 && MouseX <= 44.0 && MouseY >= 487.0 && MouseY <= 511.0) MouseState = 3;
-				if (MouseX >= 20.0 && MouseX <= 44.0 && MouseY >= 521.0 && MouseY <= 545.0) MouseState = 4;
-				if (MouseX >= 20.0 && MouseX <= 44.0 && MouseY >= 555.0 && MouseY <= 579.0) MouseState = 5;
+				for (int i = 0; i < 6; ++i) {
+					if (Rect{ 20, 385 + 34 * i, 24 }.mouseOver()) {
+						MouseState = i;
+						break;
+					}
+				}
 
 				// ボタン・時間の更新
 				for (int i = 0; i < 6; i++) {
