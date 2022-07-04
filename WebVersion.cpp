@@ -90,7 +90,7 @@ int AI_Choice() {
 		int v1 = (Z2.NumSpc + 0) * (43 - Turn); // 設備を買わない場合
 		int v2 = (Z2.NumSpc + 1) * (42 - Turn); // 設備を買う場合
 		if (v1 < v2) NextChoice = 3;
-		else NextChoice = 2;
+		else NextChoice = 0;
 	}
 
 	// その他
