@@ -778,7 +778,7 @@ void Main() {
 
 			if (Situation == 3) {
 				int StateX = -1, StateY = -1;
-				if (MouseX >= 45.0 && MouseX <= 495.0, MouseY >= 40.0 && MouseY <= 490.0) {
+				if (MouseX >= 45.0 && MouseX <= 495.0 && MouseY >= 40.0 && MouseY <= 490.0) {
 					StateY = max(0, min(8, (int)((MouseX - 45.0) / 50.0)));
 					StateX = max(0, min(4, (int)((MouseY - 40.0) / 50.0)));
 				}
