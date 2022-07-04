@@ -1035,7 +1035,7 @@ void Main() {
 			if (MouseState != 0) ButtonA[9] = max(0.0, ButtonA[9] - 5.0 * Scene::DeltaTime());
 
 			// クリックの状態
-			if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down() && WaitTime >= 0.0) {
+			if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down() && WaitTime >= 2.5) {
 				GetLastClick = Scene::Time();
 				if (MouseState == 0) { WaitTime = 0; Situation = 9; }
 			}
