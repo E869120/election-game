@@ -74,10 +74,9 @@ bool AllZero() {
 
 int AI_Choice() {
 	int Days = (Turn + 2) / 3 - 1, NextChoice = 5;
-	if (Z2.Kaban >= 350) {
-		NextChoice = 3;
-	}
-	else if (Turn == 42) {
+
+	// 14 日目の場合
+	if (Turn == 42) {
 		if (Z2.Kaban < 20) NextChoice = 2;
 		else NextChoice = 0;
 	}
@@ -85,6 +84,16 @@ int AI_Choice() {
 		if (Z2.Kaban < Z2.NumSpc * 20) NextChoice = 2;
 		else NextChoice = 0;
 	}
+
+	// 金額が 350 万円を超えた場合
+	else if (Z2.Kaban >= 350) {
+		int v1 = (Z2.NumSpc + 0) * (43 - Turn); // 設備を買わない場合
+		int v2 = (Z2.NumSpc + 1) * (42 - Turn); // 設備を買う場合
+		if (v1 < v2) NextChoice = 3;
+		else NextChoice = 2;
+	}
+
+	// その他
 	else {
 		while (true) {
 			double ret = Randouble();
@@ -93,7 +102,9 @@ int AI_Choice() {
 				ret -= probAI[i][Days];
 			}
 			if (NextChoice == 0 && Z2.Kaban < Z2.NumSpc * 20) continue;
+			if (NextChoice == 1 && Z2.Speech > 0.8 * (43 - Turn)) continue;
 			if (NextChoice == 3 && Z2.Kaban < 350) continue;
+			if (NextChoice == 4 && Z2.Jiban > 280) continue;
 			if (NextChoice == 0 && Days >= 10 && Days <= 12 && Z2.NumSpc == 1) continue;
 			break;
 		}
@@ -261,10 +272,10 @@ void Main() {
 
 	while (System::Update()) {
 
-	# if SIV3D_PLATFORM(WEB)
+# if SIV3D_PLATFORM(WEB)
 		// 描画とマウス座標を 2 倍スケーリング
 		const Transformer2D tr{ Mat3x2::Scale(2.0), TransformCursor::Yes };
-	# endif
+# endif
 
 		double MouseX = Cursor::PosF().x;
 		double MouseY = Cursor::PosF().y;
@@ -287,7 +298,11 @@ void Main() {
 			font(U"難しい").draw(20, 455, 335, ColorF(0.0, 0.0, 0.0)); font(U"相手が現職").draw(20, 437, 370, ColorF(0.0, 0.0, 0.0));
 			font(U"とても難しい").draw(20, 595, 335, ColorF(0.0, 0.0, 0.0)); font(U"相手が10選").draw(20, 603, 370, ColorF(0.0, 0.0, 0.0));
 			font(U"クリックしてレベルを選択").draw(30, 220, 500, ColorF(1.0, 1.0, 1.0, Periodic::Sine0_1(1.5s)));
-			font(U"※詳しいルールは https://github.com/E869120/election-game 参照").draw(10, 390, 570, ColorF(1.0, 1.0, 1.0));
+			const RectF urlArea = font(U"※詳しいルールは https://github.com/E869120/election-game 参照").draw(10, 390, 570, ColorF(1.0, 1.0, 1.0));
+			if (urlArea.mouseOver()) {
+				Cursor::RequestStyle(CursorStyle::Hand);
+				if (MouseL.down()) System::LaunchBrowser(U"https://github.com/E869120/election-game");
+			}
 
 			// マウスの状態
 			int MouseState = -1;
@@ -1111,9 +1126,9 @@ void Main() {
 			if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down() && WaitTime >= 0.0) {
 				GetLastClick = Scene::Time();
 				if (MouseState == 0) {
-                	if (DisVote1 >= DisVote2) Twitter::OpenTweetWindow(U"難易度「{}」の選挙が行われ、{} 票対 {} 票で勝利しました！ #election_game"_fmt(Level, DisVote1, DisVote2));
-                	else Twitter::OpenTweetWindow(U"難易度「{}」の選挙が行われ、{} 票対 {} 票で敗北しました… #election_game"_fmt(Level, DisVote1, DisVote2));
-            	}
+					if (DisVote1 >= DisVote2) Twitter::OpenTweetWindow(U"難易度「{}」の選挙が行われ、{} 票対 {} 票で勝利しました！ #election_game"_fmt(Level, ThousandsSeparate(DisVote1), ThousandsSeparate(DisVote2)));
+					else Twitter::OpenTweetWindow(U"難易度「{}」の選挙が行われ、{} 票対 {} 票で敗北しました… #election_game"_fmt(Level, ThousandsSeparate(DisVote1), ThousandsSeparate(DisVote2)));
+				}
 			}
 		}
 	}
