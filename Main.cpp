@@ -856,7 +856,7 @@ void Main() {
 
 			if (Situation == 6) {
 				int MouseState = -1;
-				if (MouseX >= 150.0 && MouseX <= 370.0 && MouseY >= 500.0 && MouseY <= 555.0) MouseState = 0;
+				if (Rect{ 150, 500, 220, 55 }.mouseOver()) MouseState = 0;
 				if (MouseState == 0) ButtonA[7] = min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
 				if (MouseState != 0) ButtonA[7] = max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
